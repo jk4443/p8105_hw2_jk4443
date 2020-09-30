@@ -14,6 +14,8 @@ library(readxl)
 trashwheel_df = 
   read_xlsx(
   "./Data Problem1/Trash-Wheel-Collection-Totals-8-6-19.xlsx",
+  sheet = "Mr. Trash Wheel", 
+  `drop_na`("trashwheel_df"),
   range = cell_cols("A:N")
   )
 ```
