@@ -58,3 +58,18 @@ precip_df =
 
 The dataset contains information from the Mr. Trashwheel trash collector in Baltimore, Maryland. The data reflects the year, month, tashcollected and also tells us about some specific kinds of trash collected by the collector. The total number of rows in the dataset is `r nrow(trashwheel_df)` rows. Additional sheets in the dataframe include the monthly precipitation from 2014- 2019. The precipitation dataset we created contains `r nrow(precip_df)` rows and contains information about the total monthly precipitation in the years 2017 and 2018. The total precipitation in 2018 was 70.33 in. 
 
+
+## Problem 2
+
+```{r}
+transit_df =
+  read_csv(
+    "./Data Problem2/NYC_Transit_Subway_Entrance_And_Exit_Data.csv") %>% 
+  janitor::clean_names() %>% 
+select(line, station_name, station_latitude, station_longitude, route1:route11, entry, vending, entrance_type, ada) %>% 
+mutate(entry = recode(entry, "YES" = "TRUE", "NO" = "FALSE"), entry = as.logical(entry))
+skimr::skim(transit_df)
+names(transit_df)
+```
+
+The dataset in Problem 2 is about the NYC transit data. It talks about the entry and exit points of each station in the city, their latitudes and longitudes and the routes that run at each station. There are a total of 19 Variables in the dataset. The Variables in the dataset are: line, station_name, route1, route2, vending, entrance_type etc. my data cleaning steps include: `r names(transit_df)` . The dimensions of my dataset are: `r nrow(transit_df)` * `r ncol(transit_df)` . According to me, I belive that the data is tidy.
