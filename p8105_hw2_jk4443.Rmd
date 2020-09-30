@@ -73,3 +73,60 @@ names(transit_df)
 ```
 
 The dataset in Problem 2 is about the NYC transit data. It talks about the entry and exit points of each station in the city, their latitudes and longitudes and the routes that run at each station. There are a total of 19 Variables in the dataset. The Variables in the dataset are: line, station_name, route1, route2, vending, entrance_type etc. my data cleaning steps include: `r names(transit_df)` . The dimensions of my dataset are: `r nrow(transit_df)` * `r ncol(transit_df)` . According to me, I belive that the data is tidy.
+
+```{r}
+distinct(transit_df, station_name)
+filter(transit_df, !(ada == FALSE))
+filter(transit_df, !(vending == "YES"))
+```
+
+The number of distinct stations include: 356. 
+The number of ada compliant stations is: 468.
+There are 183 stations that allow entry without vending.
+
+
+## Problem 3
+
+```{r}
+pols_month = read_csv("./Data Problem3/fivethirtyeight_datasets/pols-month.csv") %>% 
+  separate(
+    mon,
+    into = c("year", "month", "day"),
+    sep = "/",
+    convert = TRUE
+  ) %>% 
+  mutate(
+    month = month.name[month],
+    president = case_when(
+      prez_gop == 1 ~ 'gop',
+      prez_dem == 1 ~ 'dem'
+    )
+    ) %>% 
+  select(-day)
+
+head(pols_month)
+```
+
+```{r}
+snp = read_csv("./Data Problem3/fivethirtyeight_datasets/snp.csv") %>%
+  separate(
+    date,
+    into = c("year", "month", "day"),
+    convert = TRUE
+  ) %>% 
+  mutate(
+    month = month.name[month],
+    president = case_when(
+      prez_gop == 1 ~ 'gop',
+      prez_dem == 1 ~ 'dem'
+    )
+    ) %>% 
+  select(-day)
+
+head(pols_month)
+```
+
+```{r}
+unemploy = read_csv("./Data Problem3/fivethirtyeight_datasets/unemployment.csv") %>%
+```
+
