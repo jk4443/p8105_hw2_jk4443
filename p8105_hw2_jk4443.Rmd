@@ -27,7 +27,7 @@ trashwheel_df =
 ```{r}
 precip_2018 =
   read_excel(
-    "./Data Problem1/Trash-Wheel-Collection-Totals-8-6-19.xlsx",
+    "./Data Problem1/Trash-Wheel-Collection-Totals-7-2020-1.xlsx",
     sheet = "2018 Precipitation",
     skip = 1
   ) %>% 
@@ -40,7 +40,7 @@ precip_2018 =
 ```{r}
 precip_2017 =
   read_excel(
-    "./Data Problem1/Trash-Wheel-Collection-Totals-8-6-19.xlsx",
+    "./Data Problem1/Trash-Wheel-Collection-Totals-7-2020-1.xlsx",
     sheet = "2017 Precipitation",
     skip = 1
   ) %>% 
@@ -56,5 +56,5 @@ precip_df =
   mutate(month = month.name[month])
 ```
 
-The dataset contains information from the Mr. Trashwheel trash collector in Baltimore, Maryland. The data reflects the year, month, tashcollected and also tells us about some specific kinds of trash collected by the collector. The total number of rows in the dataset is `r nrow(trashwheel_df)` rows. Additional sheets in the dataframe include the monthly precipitation from 2014- 2019. The precipitation dataset we created contains `r nrow(precip_df)` rows and contains information about the total monthly precipitation in the years 2017 and 2018. The total precipitation in 2018 was 
+The dataset contains information from the Mr. Trashwheel trash collector in Baltimore, Maryland. The data reflects the year, month, tashcollected and also tells us about some specific kinds of trash collected by the collector. The total number of rows in the dataset is `r nrow(trashwheel_df)` rows. Additional sheets in the dataframe include the monthly precipitation from 2014- 2019. The precipitation dataset we created contains `r nrow(precip_df)` rows and contains information about the total monthly precipitation in the years 2017 and 2018. The total precipitation in 2018 was 70.33 in. 
 
