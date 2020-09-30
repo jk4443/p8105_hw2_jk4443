@@ -1,0 +1,5 @@
+---
+title: "Homework 2"
+author: Jyoti Kumar
+output: github_document
+---
