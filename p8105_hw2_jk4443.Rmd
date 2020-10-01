@@ -75,58 +75,59 @@ names(transit_df)
 The dataset in Problem 2 is about the NYC transit data. It talks about the entry and exit points of each station in the city, their latitudes and longitudes and the routes that run at each station. There are a total of 19 Variables in the dataset. The Variables in the dataset are: line, station_name, route1, route2, vending, entrance_type etc. my data cleaning steps include: `r names(transit_df)` . The dimensions of my dataset are: `r nrow(transit_df)` * `r ncol(transit_df)` . According to me, I belive that the data is tidy.
 
 ```{r}
-distinct(transit_df, station_name)
+distinct(transit_df, station_name, line)
 filter(transit_df, !(ada == FALSE))
 filter(transit_df, !(vending == "YES"))
+filter(transit_df, entry == "TRUE")
 ```
 
-The number of distinct stations include: 356. 
+The number of distinct stations include: 465. 
 The number of ada compliant stations is: 468.
-There are 183 stations that allow entry without vending.
-
+There are 1753/183 stations that allow entry without vending.
 
 ## Problem 3
 
 ```{r}
-pols_month = read_csv("./Data Problem3/fivethirtyeight_datasets/pols-month.csv") %>% 
-  separate(
-    mon,
-    into = c("year", "month", "day"),
-    sep = "/",
-    convert = TRUE
-  ) %>% 
+pols_df = read_csv("./Data Problem3/fivethirtyeight_datasets/pols-month.csv") %>% 
+  janitor::clean_names() %>% 
+separate(mon, c("year", "month", "day")) %>%
   mutate(
-    month = month.name[month],
+    month = as.factor(month.abb[as.factor(month)]),
+    year = as.factor(year),
     president = case_when(
       prez_gop == 1 ~ 'gop',
-      prez_dem == 1 ~ 'dem'
-    )
-    ) %>% 
-  select(-day)
-
-head(pols_month)
+      prez_dem == 1 ~ 'dem',
+      prez_gop == 2 ~ 'dem'
+    )) %>% 
+  select(-c(day, prez_gop, prez_dem))
 ```
 
 ```{r}
-snp = read_csv("./Data Problem3/fivethirtyeight_datasets/snp.csv") %>%
-  separate(
-    date,
-    into = c("year", "month", "day"),
-    convert = TRUE
-  ) %>% 
-  mutate(
-    month = month.name[month],
-    president = case_when(
-      prez_gop == 1 ~ 'gop',
-      prez_dem == 1 ~ 'dem'
-    )
-    ) %>% 
-  select(-day)
-
-head(pols_month)
+snp_df = 
+  read_csv("./Data Problem3/fivethirtyeight_datasets/snp.csv") %>%
+  janitor::clean_names() %>% 
+  separate(date, c("month", "day", "year")) %>% 
+    mutate(
+      month = month.abb[as.factor(month)],
+      year = as.integer(year),
+      close = as.factor(close)) %>%
+relocate(year,month) %>% 
+select(-day)
 ```
 
 ```{r}
-unemploy = read_csv("./Data Problem3/fivethirtyeight_datasets/unemployment.csv") %>%
+unemployment_df =
+  read_csv("./Data Problem3/fivethirtyeight_datasets/unemployment.csv") %>% 
+janitor::clean_names() %>%
+  rename(Jan = jan, Feb = feb, Mar = mar, Apr = apr, May = may, Jun = jun, Jul = jul, Aug = aug, Sep = sep, Oct = oct, Nov = nov, Dec = dec) %>%
+  pivot_longer(
+    Jan:Dec,
+    names_to = "month",
+    values_to = "percent_unemployed") %>% 
+  mutate(
+    year = as.factor(year),
+    month = as.factor(month),
+    percent_unemployed = as.factor(percent_unemployed))
 ```
+
 
